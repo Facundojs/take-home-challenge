@@ -19,12 +19,13 @@ export class UserService {
 
   async getUserPosts(id) {
     const user = this.getUser(id);
-    let posts = [];
-    if (!user.posts) {
+
+    let posts = user.posts;
+    if (!posts?.length) {
       const url = API_ROUTES.user_posts(id);
 
       posts = await get(url);
-      this.#updateUser(id, posts);
+      this.#updateUser(id, { posts });
     }
     return posts;
   }
